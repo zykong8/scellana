@@ -4,11 +4,13 @@ ui <- fluidPage(
   titlePanel("Single Cell Analysis"),
   
   navlistPanel(
-    "Figures",
+    widths = c(4, 8),
+    "Setup the Seurat Object",
     tabPanel(
-      "DotPlot",
+      "Step 1. Loading data",
       column(
         width = 4,
+        fileInput(),
         sliderInput("slider", label = "Test", min = 1, max = 5, value = 3, step = 1),
         numericInput("cls", label = "Number", value = 5)
       )

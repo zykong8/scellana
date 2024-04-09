@@ -5,7 +5,7 @@ gc()
 wk <- "D:\\JobManagement\\2024 年工作\\浙一单细胞数据分析\\SeuratApp\\heatmap"
 setwd(wk)
 
-
+library(shiny)
 library(Seurat)
 library(tidyverse)
 library(presto) # devtools::install_github("immunogenomics/presto")
@@ -13,7 +13,8 @@ library(ComplexHeatmap)
 library(circlize)
 
 # Step 1. Loading dataset
-pbmc <- readRDS("../data/pbmc_tutorial.rds")
+pbmc.data <- Read10X(data.dir = "filtered_gene_bc_matrices/hg19/")
+pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
 
 # Step 2. Standard analysis
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
