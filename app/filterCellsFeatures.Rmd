@@ -1,0 +1,4 @@
+---
+output: html_document
+---
+When creating a Seurat object, first filter cells and genes.

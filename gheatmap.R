@@ -2,8 +2,8 @@
 rm(list = ls())
 gc()
 
-# wk <- "D:\\JobManagement\\2024 年工作\\浙一单细胞数据分析\\SeuratApp\\heatmap"
-wk <- "/Users/xiaofei/Desktop/SingleCell/scellana/"
+wk <- "D:\\JobManagement\\2024 年工作\\浙一单细胞数据分析\\SeuratApp\\heatmap"
+# wk <- "/Users/xiaofei/Desktop/SingleCell/scellana/"
 setwd(wk)
 
 library(shiny)
@@ -202,7 +202,27 @@ htmp <- hclust(dist(tmp)) %>%
 
 
 
+ui<-fluidPage(
+  actionButton(inputId ="unif", label ="Uniform"),
+  
+  #Normal
+  plotOutput("hist")
+)
 
+server <- function(input, output) {
+
+  dunif <- eventReactive(input$unif, {
+    message("tt")
+    runif(100)
+  })
+
+  
+  output$hist <- renderPlot({
+    hist(dunif())
+  })
+}
+
+shinyApp(ui, server)
 
 
 

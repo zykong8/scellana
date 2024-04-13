@@ -16,14 +16,16 @@ ui <- fluidPage(
         column(
           width = 5,
           p(""),
+          includeMarkdown("upload.Rmd"),
           fileInput("cellranger", label = "Upload files"),
           tableOutput("files")
         ),
         column(
           width = 5,
-          sliderInput("slider", label = "Test", min = 1, max = 5, value = 3, step = 1),
-          numericInput("cls", label = "Number", value = 5),
-          actionButton("loading", label = "Loading... ", class = "btn-block")
+          includeMarkdown("filterCellsFeatures.Rmd"),
+          sliderInput("slider", label = "Gene filtering: How many cells are identified at least.", min = 1, max = 5, value = 3, step = 1),
+          numericInput("cls", label = "Cell filtering: How many genes are identified at least.", value = 200),
+          actionButton("loading", label = "Loading... ")
         )
       )
     ),
