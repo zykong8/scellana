@@ -2,8 +2,8 @@
 rm(list = ls())
 gc()
 
-wk <- "D:\\JobManagement\\2024 年工作\\浙一单细胞数据分析\\SeuratApp\\heatmap"
-# wk <- "/Users/xiaofei/Desktop/SingleCell/scellana/"
+# wk <- "D:\\JobManagement\\2024 年工作\\浙一单细胞数据分析\\SeuratApp\\heatmap"
+wk <- "/Users/xiaofei/Desktop/SingleCell/scellana/"
 setwd(wk)
 
 library(shiny)

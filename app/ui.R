@@ -9,6 +9,7 @@ ui <- fluidPage(
     widths = c(2, 10),
     fluid = TRUE,
     "Setup the Seurat Object",
+    br(),
     tabPanel(
       "Step 1. Loading data",
       includeMarkdown("Welcome.Rmd"),
@@ -18,23 +19,41 @@ ui <- fluidPage(
           p(""),
           includeMarkdown("upload.Rmd"),
           fileInput("cellranger", label = "Upload files"),
-          tableOutput("files")
+          verbatimTextOutput("files")
         ),
         column(
           width = 5,
           includeMarkdown("filterCellsFeatures.Rmd"),
-          sliderInput("slider", label = "Gene filtering: How many cells are identified at least.", min = 1, max = 5, value = 3, step = 1),
-          numericInput("cls", label = "Cell filtering: How many genes are identified at least.", value = 200),
-          actionButton("loading", label = "Loading... ")
+          sliderInput("minCells", label = "Include features detected in at least this many cells.", min = 1, max = 5, value = 3, step = 1),
+          numericInput("minFeatures", label = "Include cells where at least this many features are detected.", value = 200),
+          actionButton("loading", label = "Loading... ", class = "btn-success")
         )
       )
     ),
+    br(),
     tabPanel(
-      "Heatmap",
+      "Step 2. Standard pre-processing workflow",
+      includeMarkdown("QC.Rmd"),
       column(
         width = 4,
-        textInput("Gene1", label = "Gene", value = NULL),
-        textAreaInput("GL", label = "Gene list", value = NULL)
+        helpText("Please choose the filtering method!"),
+        selectInput("Type", label = "Filtering methods", choices = c("Customize", "SelfAdaption")),
+        uiOutput("filtering")
+      ),
+      column(
+        width = 6,
+        plotOutput("vln")
+      )
+    ),
+    br(),
+    tabPanel(
+      "Step 3. Normalizing and scaling the data",
+      includeMarkdown("Norm.Rmd"),
+      column(
+        width = 4,
+        numericInput("sf", label = "Sets the scale factor for cell-level normalization", value = 10000),
+        numericInput("hvg", label = "Identification of highly variable features", value = 2000),
+        selectInput("sg", label = "Sets the genes for Scaling the data", choices = c("Highly variable genes"='sghvg', "All genes"='sgag'))
       )
     )
   )
